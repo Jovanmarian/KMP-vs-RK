@@ -4,6 +4,8 @@
 Repositori ini berisi implementasi dan perbandingan dua algoritma pencocokan string — **Knuth-Morris-Pratt (KMP)** dan **Rabin-Karp (RK)** — untuk pencocokan pola DNA. Algoritma ini diimplementasikan dalam dua versi:
 - ✅ Versi sekuensial (CPU)
 - ⚡ Versi paralel menggunakan CUDA (GPU)
+- https://docs.google.com/document/d/1xZc1V3vqB4yin6NjN_uEihYQc8wv3opvMNl8nEYz89w/edit
+
 
 Dataset menggunakan genom **Mus musculus (tikus)** dari NCBI:  
 [GCF_000001635.27](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
