@@ -1,9 +1,9 @@
-# 🔬 Parallel String Matching Using CUDA: KMP vs Rabin-Karp on DNA Sequence
+#  Parallel String Matching Using CUDA: KMP vs Rabin-Karp on DNA Sequence
 
-## 📌 Deskripsi Proyek
+##  Deskripsi Proyek
 Repositori ini berisi implementasi dan perbandingan dua algoritma pencocokan string — **Knuth-Morris-Pratt (KMP)** dan **Rabin-Karp (RK)** — untuk pencocokan pola DNA. Algoritma ini diimplementasikan dalam dua versi:
-- ✅ Versi sekuensial (CPU)
-- ⚡ Versi paralel menggunakan CUDA (GPU)
+-  Versi sekuensial (CPU)
+-  Versi paralel menggunakan CUDA (GPU)
 - https://docs.google.com/document/d/1xZc1V3vqB4yin6NjN_uEihYQc8wv3opvMNl8nEYz89w/edit
 
 
@@ -12,7 +12,7 @@ Dataset menggunakan genom **Mus musculus (tikus)** dari NCBI:
 
 ---
 
-## 🎯 Tujuan
+##  Tujuan
 - Menganalisis efisiensi algoritma string matching untuk urutan DNA.
 - Mengimplementasikan CUDA untuk mempercepat proses pencocokan string.
 - Membandingkan hasil dan kecepatan eksekusi antara versi CPU dan GPU.
@@ -23,7 +23,7 @@ Dataset menggunakan genom **Mus musculus (tikus)** dari NCBI:
 
 ---
 
-## 📁 Struktur Proyek
+##  Struktur Proyek
 
 ```
 KMP-on-CUDA-master/
@@ -49,7 +49,7 @@ rabin-karp-for-CUDA-master/
 ---
 ---
 
-## 🚀 Compilation and Execution
+##  Compilation and Execution
 
 Make sure you have **NVIDIA CUDA Toolkit** installed.
 
@@ -67,7 +67,8 @@ nvcc -o rk_cuda rabin_karp.cu
 
 ---
 
-## 📊 Output
+## 
+Output
 
 - Results will be written to `output.txt`.
 - You may compare GPU performance (execution time and memory usage) using:
