@@ -17,6 +17,9 @@ Dataset menggunakan genom **Mus musculus (tikus)** dari NCBI:
 - Mengimplementasikan CUDA untuk mempercepat proses pencocokan string.
 - Membandingkan hasil dan kecepatan eksekusi antara versi CPU dan GPU.
 - Membuat laporan ilmiah dalam format IEEE berdasarkan hasil eksperimen.
+- Mengimplementasikan algoritma KMP dan Rabin-Karp menggunakan CUDA untuk pencocokan string pada data DNA.  
+- Menganalisis waktu eksekusi dan penggunaan memori pada berbagai ukuran dataset.  
+- Membandingkan efisiensi dan skalabilitas kedua algoritma dalam eksekusi secara paralel.
 
 ---
 
@@ -76,11 +79,6 @@ nvcc -o rk_cuda rabin_karp.cu
 
 ---
 
-## 🎯 Research Objectives
-
-- Implement KMP and Rabin-Karp using CUDA for string matching on DNA.
-- Analyze execution time and memory usage on various dataset sizes.
-- Compare efficiency and scalability of both algorithms in parallel execution.
 
 ---
 
