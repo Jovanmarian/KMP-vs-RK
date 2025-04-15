@@ -83,7 +83,7 @@ Output
 
 ---
 
-## 📚 References
+## References
 
 - CUDA Toolkit Documentation: https://docs.nvidia.com/cuda/
 - NCBI Genome Data: https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/
@@ -92,7 +92,7 @@ Output
 
 ---
 
-## 🧠 Authors
+## Authors
 
 - Vincent Arianto (01082220009)
 - Jonathan Tiong (01082220017)
