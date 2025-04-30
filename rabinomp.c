@@ -1,118 +1,126 @@
 #include <stdio.h>
-//#include <omp.h>
+#include <stdlib.h>
 #include <string.h>
-#include <math.h>
-/*
- * compute string value, length should be small than strlen
- */
-int compute_value(char *str, int length, int d, int q)
-{
-    int i = 0;
-    int p0 = 0;
+#include <time.h>
 
-    for (i = 0; i < length; ++i) {
-	p0 = (d * p0 + (str[i] /*- '0'*/)) % q;
+#define MAX_PATTERNS 1024
+#define PATTERN_LENGTH 100 // Disesuaikan dengan panjang maksimal pattern
+
+// Fungsi membaca isi DNA dari file
+char* read_dna_sequence(const char* filename) {
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("File tidak ditemukan: %s\n", filename);
+        exit(1);
     }
 
-    return p0;
+    fseek(fp, 0, SEEK_END);
+    long length = ftell(fp);
+    rewind(fp);
 
+    char *buffer = (char*)malloc(sizeof(char) * (length + 1));
+    fread(buffer, sizeof(char), length, fp);
+    buffer[length] = '\0';
+
+    fclose(fp);
+    return buffer;
 }
 
-int rk_matcher(char *str, char *pattern, int d, int q)
-{
-    int i = 0,j=0;
-    int str_length = strlen(str);
-    int pattern_length = strlen(pattern);
-    int p0 = 0;
-    int ts[str_length];
-
-    int num_cores=4;
-    int chunk_len=(int)ceil((float)str_length/num_cores);
-    int padding_len=chunk_len*num_cores-str_length;
-    int el_chunk_len=chunk_len+pattern_length-1;
-
-    //matrix which holds the characters, each row will go to a core
-    int tss[num_cores][el_chunk_len];
-    
-    //initial zeroes
-    for (i=0; i<pattern_length-1; i++)
-    	tss[0][i]=0;
-
-    //first n-1 cores' characters
-    for (i=0; i<num_cores-1; i++)
-        for (j=0;j<chunk_len;j++)
-            tss[i][j+pattern_length-1]=str[i*chunk_len+j];
-    
-    //last core's characters
-    for (i=(num_cores-1)*chunk_len, j=0; i<str_length;i++,j++)
-        tss[num_cores-1][j+pattern_length-1]=str[i];
-    
-    //last n-1 cores' padding characters
-    for (i=1;i<num_cores;i++)
-        for (j=0;j<pattern_length-1;j++)
-            tss[i][j]=tss[i-1][j+chunk_len];
-    
-    //last core's last paddings
-    for (i=0; i<padding_len;i++)
-        tss[num_cores-1][el_chunk_len-i-1]=0;
-
-    /* This code block prints what is inside the matrix
-    for (i=0;i<num_cores;i++)
-    {
-        for (j=0;j<el_chunk_len;j++)
-            if (tss[i][j]==0)
-                printf("%c", '0');
-            else
-                printf("%c", tss[i][j]);
-        printf("\n");
-    }
-    */
-
-
-
-    //hash value of the pattern
-    p0 = compute_value(pattern, pattern_length, d, q);
-    
-    //hash value of the first char
-    ts[0] = compute_value(str, pattern_length, d, q);
-
-    //p does not change, calculate once
-    int p=pow(d, pattern_length-1);
-    for (i = 1; i < str_length-pattern_length+1; i++) 
-    {
-	ts[i] = ((str[i + pattern_length - 1])*p
-                    +(ts[i-1]-(str[i-1]))/d)%q;
-	/*	(ts[i - 1] * d -
-		 ((str[i - 1] - '0') * (int) pow(d,
-						 pattern_length))) % q +
-		(str[i + pattern_length - 1]
-		 - '0') % q;*/
+// Fungsi membaca patterns dari file
+int read_patterns(const char* filename, char patterns[][PATTERN_LENGTH]) {
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("File pattern tidak ditemukan: %s\n", filename);
+        exit(1);
     }
 
-/*    for (i=0;i<str_length-pattern_length+1;i++)
-    {
-    	printf("%d ", ts[i]);
-    }*/
-
-    for (i = 0; i <= str_length - pattern_length+1; ++i) {
-	if (ts[i] == p0) {
-	    for (j = 0; j < pattern_length; ++j) {
-		if (pattern[j] != str[i + j]) {
-		    break;
-		} else if (j == pattern_length - 1) {
-		    printf("%d\n", i);
-		}
-	    }
-	}
+    int count = 0;
+    while (fgets(patterns[count], PATTERN_LENGTH, fp) != NULL) {
+        // Hilangkan newline di akhir pattern
+        patterns[count][strcspn(patterns[count], "\r\n")] = '\0';
+        count++;
+        if (count >= MAX_PATTERNS) break;
     }
 
-    return 0;
-
+    fclose(fp);
+    return count;
 }
 
-int main(int argc, char *argv[])
-{
-    int pos = rk_matcher("bababanaparaver", "aba", 3, 50);
-    //printf("%d", pos);
-    return 0;
+// Fungsi Rabin-Karp matcher
+void rk_matcher(char *text, char *pattern, int d, int q) {
+    int n = strlen(text);
+    int m = strlen(pattern);
+    int i, j;
+    int h = 1;
+    int p = 0;  // hash untuk pattern
+    int t = 0;  // hash untuk teks
+
+    // h = pow(d, m-1) % q
+    for (i = 0; i < m - 1; i++)
+        h = (h * d) % q;
+
+    // Hitung hash awal pattern dan teks
+    for (i = 0; i < m; i++) {
+        p = (d * p + pattern[i]) % q;
+        t = (d * t + text[i]) % q;
+    }
+
+    int found = 0;
+
+    // Slide pola ke seluruh teks
+    for (i = 0; i <= n - m; i++) {
+        // Jika hash cocok, cek karakter satu per satu
+        if (p == t) {
+            for (j = 0; j < m; j++) {
+                if (text[i + j] != pattern[j])
+                    break;
+            }
+            if (j == m) {
+                // printf("Pola ditemukan di posisi: %d\n", i); // Optional
+                found = 1;
+            }
+        }
+
+        // Hitung hash untuk window teks berikutnya
+        if (i < n - m) {
+            t = (d * (t - text[i] * h) + text[i + m]) % q;
+
+            // pastikan t tidak negatif
+            if (t < 0)
+                t = (t + q);
+        }
+    }
+
+    if (!found) {
+        // printf("Pola tidak ditemukan.\n"); // Optional
+    }
+}
+
+int main() {
+    const char *dna_filename = "sequence_100k1.txt";    // Ganti dengan path file DNA jika perlu
+    const char *pattern_filename = "patterns_1024.txt";    // Ganti dengan path file pattern jika perlu
+
+    printf("\nMembaca file DNA...\n");
+    char *dna = read_dna_sequence(dna_filename);
+
+    printf("\nMembaca file patterns...\n");
+    char patterns[MAX_PATTERNS][PATTERN_LENGTH];
+    int num_patterns = read_patterns(pattern_filename, patterns);
+
+    printf("\nMelakukan pencocokan untuk %d pola...\n", num_patterns);
+
+    // Mulai hitung waktu
+    clock_t start = clock();
+
+    for (int i = 0; i < num_patterns; i++) {
+        rk_matcher(dna, patterns[i], 256, 101); // base 256, modulus q=101
+    }
+
+    // Akhir hitung waktu
+    clock_t end = clock();
+    double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+
+    printf("\nWaktu eksekusi untuk %d pola: %.6f detik\n", num_patterns, elapsed);
+
+    free(dna);
 }
