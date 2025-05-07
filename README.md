@@ -8,7 +8,7 @@ Repositori ini berisi implementasi dan perbandingan dua algoritma pencocokan str
 
 
 Dataset menggunakan genom **Mus musculus (tikus)** dari NCBI:  
-[GCF_000001635.27](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
+[GCF_000001635.27_GRCm39_genomic.fna](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
 
 ---
 
@@ -105,6 +105,24 @@ Parallel 1/
 ---
 
 ##  Compilation and Execution
+
+### KMP – Serial (C++)
+
+To compile and run the KMP algorithm on CPU:
+
+```bash
+g++ kmp.cpp -o kmp_serial
+./kmp_serial
+```
+
+Rabin-Karp (RK) – Serial (C)
+
+```bash
+To compile and run the Rabin-Karp algorithm on CPU:
+
+gcc rabinomp.c -o rabinomp
+./rabinomp
+```
 
 Make sure you have **NVIDIA CUDA Toolkit** installed.
 
