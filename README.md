@@ -115,7 +115,7 @@ g++ kmp.cpp -o kmp_serial
 ./kmp_serial
 ```
 
-Rabin-Karp (RK) – Serial (C)
+### Rabin-Karp (RK) – Serial (C)
 
 ```bash
 To compile and run the Rabin-Karp algorithm on CPU:
