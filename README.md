@@ -4,7 +4,7 @@
 Repositori ini berisi implementasi dan perbandingan dua algoritma pencocokan string — **Knuth-Morris-Pratt (KMP)** dan **Rabin-Karp (RK)** — untuk pencocokan pola DNA. Algoritma ini diimplementasikan dalam dua versi:
 -  Versi sekuensial (CPU)
 -  Versi paralel menggunakan CUDA (GPU)
-- https://docs.google.com/document/d/1xZc1V3vqB4yin6NjN_uEihYQc8wv3opvMNl8nEYz89w/edit
+- https://docs.google.com/document/d/1y5i4XgY5Jr1YY4mwS7cUR9F_BiG5WwEeiy-WfPsREm0/edit?usp=sharing
 
 
 Dataset menggunakan genom **Mus musculus (tikus)** dari NCBI:  
@@ -48,8 +48,8 @@ Parallel 1/
 │   ├── rabin_profile_512.nsys-rep  # Profiling results for Rabin-Karp algorithm with pattern size 512.
 │   ├── rabin_profile_64.nsys-rep   # Profiling results for Rabin-Karp algorithm with pattern size 64.
 │   └── rabin_profile_8.nsys-rep    # Profiling results for Rabin-Karp algorithm with pattern size 8.
-├── Pattern/                        # Directory containing pattern files for matching.
-│   └── kmp rk.xlsx                # Excel file with patterns for KMP and Rabin-Karp algorithms.
+├── Performance data/                        # Directory containing pattern files for matching.
+│   └── RKdanKMP.xlsx                # Excel file with patterns for KMP and Rabin-Karp algorithms.
 ├── Sqlite/                         # SQLite database files for profiling data.
 │   ├── kmp_profile_1024.sqlite     # SQLite database for KMP algorithm profiling with pattern size 1024.
 │   ├── kmp_profile_128.sqlite      # SQLite database for KMP algorithm profiling with pattern size 128.
