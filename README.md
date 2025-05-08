@@ -157,14 +157,24 @@ nsys profile -o rabin_profile_1024 ./rabin sequence_100k1.txt patterns_1024.txt
 ## 
 Output
 
-- Results will be written to `output.txt`.
-- You may compare GPU performance (execution time and memory usage) using:
-  - `cudaEventRecord` timing (embedded in code), or
-  - `nsys` for detailed profiling:
-    ```bash
-    nsys profile ./kmp_cuda input.txt
-    ```
+For serial versions (KMP and Rabin-Karp), the execution time (in seconds) is printed directly to the terminal and not written to output.txt. Example output:
 
+Reading DNA file...
+Reading patterns...
+Running KMP for 1024 patterns...
+Execution time: 0.534000 seconds
+
+For parallel CUDA versions:
+
+Execution time is displayed in the terminal using cudaEventRecord, measured in milliseconds.
+
+Detailed profiling data is generated using Nsight Systems and saved as .nsys-rep files. These can be opened with the Nsight Systems GUI for timeline analysis:
+  ```bash
+  nsys profile -o kmp_profile_1024 ./kmp sequence_100k1.txt patterns_1024.txt
+  nsys profile -o rabin_profile_1024 ./rabin sequence_100k1.txt patterns_1024.txt
+  
+These outputs allow for quantitative comparison of the performance (execution time and GPU behavior) between serial and parallel implementations.
+```
 ---
 
 
