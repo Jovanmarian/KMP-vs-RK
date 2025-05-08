@@ -196,5 +196,5 @@ These outputs allow for quantitative comparison of the performance (execution ti
 - Jovan Marian Winarko (01082220003)
 - Mikhail Keene Grady (01082220012)
 
-Fakultas Teknologi Informasi, Universitas Pelita Harapan
+Faculty of Information Technology, Universitas Pelita Harapan
 
