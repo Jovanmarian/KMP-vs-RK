@@ -157,13 +157,13 @@ nsys profile -o rabin_profile_1024 ./rabin sequence_100k1.txt patterns_1024.txt
 ## 
 Output
 
-For serial versions (KMP and Rabin-Karp), the execution time (in seconds) is printed directly to the terminal and not written to output.txt. Example output:
-
-Reading DNA file...
-Reading patterns...
-Running KMP for 1024 patterns...
-Execution time: 0.534000 seconds
-
+For serial versions (KMP and Rabin-Karp), the execution time (in seconds) is printed directly to the terminal. Example output:
+```bash
+Membaca file DNA...
+Membaca file patterns...
+Menjalankan KMP untuk 1024 pola...
+Waktu eksekusi: 0.512000 detik
+```
 For parallel CUDA versions:
 
 Execution time is displayed in the terminal using cudaEventRecord, measured in milliseconds.
@@ -172,9 +172,9 @@ Detailed profiling data is generated using Nsight Systems and saved as .nsys-rep
   ```bash
   nsys profile -o kmp_profile_1024 ./kmp sequence_100k1.txt patterns_1024.txt
   nsys profile -o rabin_profile_1024 ./rabin sequence_100k1.txt patterns_1024.txt
-  
+  ```  
 These outputs allow for quantitative comparison of the performance (execution time and GPU behavior) between serial and parallel implementations.
-```
+
 ---
 
 
