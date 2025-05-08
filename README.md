@@ -175,8 +175,6 @@ Detailed profiling data is generated using Nsight Systems and saved as .nsys-rep
   ```  
 These outputs allow for quantitative comparison of the performance (execution time and GPU behavior) between serial and parallel implementations.
 
----
-
 
 ---
 
